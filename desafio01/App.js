@@ -4,7 +4,13 @@ export default function App() {
   return (
     <View style={{ flex: 1, flexDirection: "column" }}>
       {/* primeira metade */}
-      <View style={{ flex: 1, flexDirection: "column" }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <View style={styles.topo} />
 
         <View
@@ -64,9 +70,7 @@ export default function App() {
 const styles = StyleSheet.create({
   topo: {
     height: 25,
-    width: "100%",
     backgroundColor: "#50E3C2",
-    alignSelf: "flex-start",
   },
   quadrado: {
     backgroundColor: "#F5A623",
@@ -90,14 +94,10 @@ const styles = StyleSheet.create({
   },
   separador: {
     height: 13,
-    width: "100%",
     backgroundColor: "#50E3C2",
-    alignSelf: "flex-start",
   },
   inferior: {
     backgroundColor: "#4A90E2",
     height: 60,
-    width: "100%",
-    alignSelf: "flex-end",
   },
 });
