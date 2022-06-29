@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Text, Pressable, StatusBar, ImageBackground } from "react-native";
-import { Roboto_400Regular, useFonts } from "@expo-google-fonts/roboto";
 import { styles } from "./styles";
 import { getDeckId } from "../../services/axiosClient";
 import bgImg from "../../assets/images/ace2.avif";
@@ -24,11 +23,6 @@ const Home = ({ navigation }) => {
       deckId: idDeck,
     });
   };
-
-  const [fontesCarregadas] = useFonts({ Roboto_400Regular });
-  if (!fontesCarregadas) {
-    return <Text>Carregando</Text>;
-  }
 
   return (
     <ImageBackground
