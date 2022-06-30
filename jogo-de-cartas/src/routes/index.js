@@ -5,11 +5,11 @@ import Private from "./Private";
 import Public from "./Public";
 
 const Routes = () => {
-  const { user, logado } = useContext(AuthContext);
+  const { logado } = useContext(AuthContext);
 
   return (
     <NavigationContainer>
-      {!!logado ? <Private /> : <Public />}
+      {logado ? <Private /> : <Public />}
     </NavigationContainer>
   );
 };

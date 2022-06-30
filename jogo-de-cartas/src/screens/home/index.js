@@ -7,7 +7,7 @@ import bgImg from "../../assets/images/cards.png";
 import Button from "../../components/Button";
 
 const Home = ({ navigation }) => {
-  const { signIn, user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [idDeck, setIdDeck] = useState(null);
 
@@ -35,7 +35,7 @@ const Home = ({ navigation }) => {
       imageStyle={{ resizeMode: "contain" }}
     >
       <View style={styles.header}>
-        <Text style={styles.text}>username: {user.user.nome}</Text>
+        <Text style={styles.text}>username: {user.nome}</Text>
       </View>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text style={styles.title}>Texas Hold'em</Text>

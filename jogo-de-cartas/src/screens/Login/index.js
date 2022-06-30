@@ -17,13 +17,13 @@ const Login = () => {
           placeholder="Usuário"
           style={styles.input}
           value={usuarioInput}
-          onChange={(e) => setUsuarioInput(e.target.value)}
+          onChangeText={setUsuarioInput}
         />
         <TextInput
           placeholder="Senha"
           style={styles.input}
           value={senhaInput}
-          onChange={(e) => setSenhaInput(e.target.value)}
+          onChangeText={setSenhaInput}
         />
         <Button
           text={"Entrar"}

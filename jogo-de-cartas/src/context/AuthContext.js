@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import { login } from "../services/auth";
-
+import api from "../services/api";
 export const AuthContext = createContext({});
 
 const AuthProvider = ({ children }) => {
@@ -8,12 +8,11 @@ const AuthProvider = ({ children }) => {
   const [logado, setLogado] = useState(false);
 
   const signIn = async (usuario, senha) => {
-    console.log(usuario);
-    const response = await login();
-    console.log(response.user.email);
-    if (usuario === "" && senha === "") {
-      setUser(response);
+    const { user, token } = await login(usuario, senha);
+    if (user && token) {
+      setUser(user);
       setLogado(true);
+      api.defaults.headers["Authorization"] = `Bearer ${token}`;
     }
   };
 
