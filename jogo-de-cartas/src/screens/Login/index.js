@@ -11,24 +11,26 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Login</Text>
-      <TextInput
-        placeholder="Usuário"
-        styles={styles.input}
-        value={usuarioInput}
-        onChange={(e) => setUsuarioInput(e.target.value)}
-      />
-      <TextInput
-        placeholder="Senha"
-        styles={styles.input}
-        value={senhaInput}
-        onChange={(e) => setSenhaInput(e.target.value)}
-      />
-      <Button
-        text={"Entrar"}
-        title="ENTRAR"
-        action={() => signIn(usuarioInput, senhaInput)}
-      />
+      <View style={styles.box}>
+        <Text style={styles.text}>Login</Text>
+        <TextInput
+          placeholder="Usuário"
+          style={styles.input}
+          value={usuarioInput}
+          onChange={(e) => setUsuarioInput(e.target.value)}
+        />
+        <TextInput
+          placeholder="Senha"
+          style={styles.input}
+          value={senhaInput}
+          onChange={(e) => setSenhaInput(e.target.value)}
+        />
+        <Button
+          text={"Entrar"}
+          title="ENTRAR"
+          action={() => signIn(usuarioInput, senhaInput)}
+        />
+      </View>
     </View>
   );
 };
