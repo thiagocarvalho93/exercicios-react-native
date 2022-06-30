@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { getCards } from "../../services/axiosClient";
 import { styles } from "./styles";
 
@@ -16,18 +16,10 @@ const Game = ({ route }) => {
   }, []);
 
   useEffect(() => {
-    // if (cards.length === 0) return;
     console.log(cards);
   }, [cards]);
 
-  return (
-    <View style={styles.container}>
-      {cards &&
-        cards.cards.map((card) => (
-          <Text style={styles.buttonText}>{card.image}</Text>
-        ))}
-    </View>
-  );
+  return <View style={styles.container}></View>;
 };
 
 export default Game;

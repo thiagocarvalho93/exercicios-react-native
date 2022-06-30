@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Text, Pressable, StatusBar, ImageBackground } from "react-native";
+import { Text, ImageBackground } from "react-native";
 import { styles } from "./styles";
 import { getDeckId } from "../../services/axiosClient";
-import bgImg from "../../assets/images/ace2.avif";
+import bgImg from "../../assets/images/cards.png";
+import Button from "../../components/Button";
 
 const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -30,15 +31,8 @@ const Home = ({ navigation }) => {
       style={styles.container}
       imageStyle={{ resizeMode: "contain" }}
     >
-      <StatusBar />
       <Text style={styles.title}>Texas Hold'em</Text>
-      <Pressable
-        title="Iniciar Partida"
-        onPress={inciarPartida}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Iniciar</Text>
-      </Pressable>
+      <Button text={"Iniciar"} action={inciarPartida} />
     </ImageBackground>
   );
 };
