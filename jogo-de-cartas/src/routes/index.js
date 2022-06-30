@@ -1,25 +1,17 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../screens/home";
-import Game from "../screens/game";
-
-const Stack = createNativeStackNavigator();
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import Private from "./Private";
+import Public from "./Public";
 
 const Routes = () => {
+  const { user, logado } = useContext(AuthContext);
+
+  console.log(user);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Game"
-          component={Game}
-          options={{ title: "Título da Página" }}
-        />
-      </Stack.Navigator>
+      {!!logado ? <Private /> : <Public />}
     </NavigationContainer>
   );
 };

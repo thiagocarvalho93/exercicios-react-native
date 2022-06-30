@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, ImageBackground } from "react-native";
+import { Text, ImageBackground, View } from "react-native";
 import { styles } from "./styles";
 import { getDeckId } from "../../services/axiosClient";
 import bgImg from "../../assets/images/cards.png";
@@ -31,8 +31,12 @@ const Home = ({ navigation }) => {
       style={styles.container}
       imageStyle={{ resizeMode: "contain" }}
     >
-      <Text style={styles.title}>Texas Hold'em</Text>
-      <Button text={"Iniciar"} action={inciarPartida} />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={styles.title}>Texas Hold'em</Text>
+      </View>
+      <View style={{ flex: 4 }}>
+        <Button text={"Iniciar"} action={inciarPartida} />
+      </View>
     </ImageBackground>
   );
 };

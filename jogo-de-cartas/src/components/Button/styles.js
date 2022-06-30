@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     color: "white",
   },
   button: {
-    marginTop: "50%",
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
