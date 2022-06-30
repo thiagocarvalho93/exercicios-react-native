@@ -4,12 +4,15 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "black",
   },
-  cards: {
+  table: {
     flex: 1,
+    flexDirection: "row",
     justifyContent: "center",
+    flexWrap: "wrap",
     alignItems: "center",
+    backgroundColor: "green",
     borderWidth: 2,
     width: "100%",
     padding: 10,
@@ -18,6 +21,8 @@ export const styles = StyleSheet.create({
     flex: 3,
     borderWidth: 2,
     padding: 20,
-    borderRadius: 10,
+  },
+  text: {
+    color: "white",
   },
 });

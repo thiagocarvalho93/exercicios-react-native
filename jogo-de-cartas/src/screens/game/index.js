@@ -4,13 +4,18 @@ import { View, Text, Image } from "react-native";
 import { getCards } from "../../services/axiosClient";
 import { styles } from "./styles";
 
-const Game = ({ route }) => {
+const Game = ({ route, navigation }) => {
   const { deckId } = route.params;
   const [cards, setCards] = useState(null);
 
   const get = async () => {
     const deck = await getCards(deckId, 1);
-    setCards(deck);
+    if (cards === null) {
+      setCards(deck);
+    } else {
+      setCards({ ...cards, cards: [...cards.cards, ...deck.cards] });
+    }
+    console.log(cards);
   };
 
   useEffect(() => {
@@ -23,16 +28,20 @@ const Game = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.cards}>
+      <View style={styles.table}>
         {cards &&
-          cards.cards.map((card) => (
-            <Image source={card.image} style={{ width: 113, height: 157 }} />
+          cards.cards.map((card, index) => (
+            <Image
+              key={index}
+              source={card.image}
+              style={{ width: 56, height: 79 }}
+            />
           ))}
       </View>
       <View style={styles.menu}>
-        <Text>Pontuação:</Text>
+        <Text style={styles.text}>Pontuação:</Text>
         <Button text={"Comprar carta"} action={() => get()} />
-        <Button text={"Finalizar"} />
+        <Button text={"Voltar"} action={navigation.goBack} />
       </View>
     </View>
   );
