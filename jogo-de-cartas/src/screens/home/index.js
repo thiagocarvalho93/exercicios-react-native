@@ -15,6 +15,7 @@ const Home = ({ navigation }) => {
     const get = async () => {
       setLoading(true);
       const id = await getDeckId();
+      console.log(id);
       setIdDeck(id);
       setLoading(false);
     };

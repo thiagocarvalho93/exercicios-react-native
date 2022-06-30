@@ -7,8 +7,6 @@ import Public from "./Public";
 const Routes = () => {
   const { user, logado } = useContext(AuthContext);
 
-  console.log(user);
-
   return (
     <NavigationContainer>
       {!!logado ? <Private /> : <Public />}

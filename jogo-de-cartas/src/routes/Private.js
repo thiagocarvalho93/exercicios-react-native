@@ -16,7 +16,7 @@ const Private = () => {
       <Stack.Screen
         name="Game"
         component={Game}
-        options={{ title: "Título da Página" }}
+        options={{ title: "Game" }}
       />
     </Stack.Navigator>
   );

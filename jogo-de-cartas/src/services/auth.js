@@ -8,6 +8,6 @@ export const login = () => {
         },
         token: "skldjfdsjklh23962579oashlasflhfl20382fslkdfskdf",
       });
-    }, 1000);
+    }, 100);
   });
 };
