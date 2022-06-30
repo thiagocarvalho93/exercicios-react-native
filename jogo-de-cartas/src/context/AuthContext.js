@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
     console.log(usuario);
     const response = await login();
     console.log(response.user.email);
-    if (usuario === "thiago" && senha === "123") {
+    if (usuario === "" && senha === "") {
       setUser(response);
       setLogado(true);
     }

@@ -8,13 +8,17 @@ export const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
-    fontSize: 36,
+    fontSize: 25,
     textAlign: "center",
-    textAlignVertical: "center",
     fontWeight: "bold",
     position: "absolute",
     color: "white",
     marginTop: "15%",
     zIndex: 1,
   },
+  header: {
+    justifyContent: "flex-start",
+    alignItems: "baseline",
+  },
+  text: { color: "white" },
 });
