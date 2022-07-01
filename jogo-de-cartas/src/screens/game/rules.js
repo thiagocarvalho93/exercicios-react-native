@@ -62,6 +62,36 @@ export const verificaStraight = (mao, mesa) => {
   return false;
 };
 
-export const verificaDuplicados = (mao, mesa) => {};
+export const verificaQuadra = (mao, mesa) => {
+  let valores = organizaValores(mao, mesa);
+  let count = 1;
+  let max = 1;
+  let prev = 0;
+  for (let i = 0; i < valores.length; i++) {
+    if (valores[i] === prev) count++;
+    if (count > max) {
+      max = count;
+    } else {
+      count = 1;
+    }
+    prev = valores[i];
+  }
+  if (max === 4) return true;
+  return false;
+};
 
-export const verificaMao = (mao, mesa) => {};
+export const verificaMao = (mao, mesa) => {
+  // STRAIGHT FLUSH 1
+  if (verificaStraight(mao, mesa) && verificaFlush(mao, mesa)) return 1;
+  // QUADRA 2
+  if (verificaQuadra(mao, mesa)) return 2;
+  // FULL HOUSE 3
+  // FLUSH 4
+  if (verificaFlush(mao, mesa)) return 4;
+  // STRAIGHT 5
+  if (verificaStraight(mao, mesa)) return 5;
+  // TRINCA 6
+  // DOIS PARES 7
+  // PAR 8
+  // CARTA ALTA 9
+};
