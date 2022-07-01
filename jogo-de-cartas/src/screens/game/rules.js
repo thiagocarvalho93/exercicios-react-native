@@ -53,7 +53,7 @@ export const verificaStraight = (mao, mesa) => {
     if (valores[i] - prev === 1) {
       count++;
       if (count > max) max = count;
-    } else {
+    } else if (valores[i] - prev > 1) {
       count = 1;
     }
     prev = valores[i];
