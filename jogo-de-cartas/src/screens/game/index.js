@@ -60,7 +60,6 @@ const Game = ({ route, navigation }) => {
     const oponente = await getCards(deckId, 2);
     setHand(hand);
     setOponente(oponente);
-    console.log(hand);
   };
 
   const handleFold = async () => {

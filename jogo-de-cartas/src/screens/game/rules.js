@@ -1,21 +1,3 @@
-const ordem = [
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "JACK",
-  "QUEEN",
-  "KING",
-  "ACE",
-];
-
-const suits = ["SPADES", "DIAMONDS", "CLUBS", "HEARTS"];
-
 const organizaNaipes = (mao, mesa) => {
   // Array de naipes
   let valores = [];
@@ -37,14 +19,11 @@ export const organizaValores = (mao, mesa) => {
     if (element === "ACE") return "14";
     return element;
   });
-
   valores = valores
     .map((a) => parseInt(a, 10))
     .sort(function (a, b) {
       return a - b;
     });
-
-  console.log(valores);
   return valores;
 };
 
@@ -61,7 +40,6 @@ export const verificaFlush = (mao, mesa) => {
     }
     count = 0;
   }
-  console.log(max);
   if (max >= 5) return true;
   return false;
 };
@@ -80,7 +58,8 @@ export const verificaStraight = (mao, mesa) => {
     }
     prev = valores[i];
   }
-  console.log(max);
+  if (max >= 5) return true;
+  return false;
 };
 
 export const verificaDuplicados = (mao, mesa) => {};
