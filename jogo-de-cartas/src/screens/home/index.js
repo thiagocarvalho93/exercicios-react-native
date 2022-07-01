@@ -24,7 +24,7 @@ const Home = ({ navigation }) => {
 
   const inciarPartida = async () => {
     navigation.navigate("Game", {
-      deckId: idDeck,
+      idDeck: idDeck,
     });
   };
 

@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import Button from "../../components/Button";
 import { View, Text, Image } from "react-native";
-import { getCards } from "../../services/axiosClient";
+import { getCards, getDeckId } from "../../services/axiosClient";
 import { styles } from "./styles";
 import { AuthContext } from "../../context/AuthContext";
+import { verificaDupla, verificaFlush } from "./rules";
 
 const Game = ({ route, navigation }) => {
-  const { deckId } = route.params;
+  const { idDeck } = route.params;
+  const [deckId, setDeckId] = useState(idDeck);
   const [cards, setCards] = useState(null);
   const [hand, setHand] = useState(null);
   const [oponente, setOponente] = useState(null);
@@ -31,9 +33,9 @@ const Game = ({ route, navigation }) => {
       setCards(deck);
     } else {
       setCards({ ...cards, cards: [...cards.cards, ...deck.cards] });
-    }
-    if (cards.cards.length === 4) {
-      setFinal(true);
+      if (cards.cards.length === 4) {
+        setFinal(true);
+      }
     }
   };
 
@@ -51,6 +53,7 @@ const Game = ({ route, navigation }) => {
     } else {
       get();
     }
+    verificaFlush(hand, cards);
     setRodada((prevstate) => prevstate + 1);
   };
 
@@ -59,11 +62,22 @@ const Game = ({ route, navigation }) => {
     const oponente = await getCards(deckId, 2);
     setHand(hand);
     setOponente(oponente);
+    console.log(hand);
   };
 
-  const handleFold = () => {
+  const handleFold = async () => {
     setFichasOponente((prevstate) => prevstate + pot);
+    novoJogo();
+  };
+
+  const novoJogo = async () => {
     setPot(0);
+    const newDeckId = await getDeckId();
+    setDeckId(newDeckId);
+    setCards(null);
+    getHand();
+    setFinal(false);
+    setRodada(0);
   };
 
   useEffect(() => {
@@ -83,7 +97,7 @@ const Game = ({ route, navigation }) => {
           ))}
       </View>
       <View style={styles.gameStatus}>
-        <Text style={styles.text}>Rodada: FLOP</Text>
+        <Text style={styles.text}>Rodada: {rodada}</Text>
         <Text style={styles.text}>Pot: ${pot}</Text>
       </View>
       <View style={styles.menuContainer}>
@@ -118,10 +132,13 @@ const Game = ({ route, navigation }) => {
           </View>
         </View>
         <View style={styles.menu}>
-          <Button text={"Apostar"} action={() => handleAposta()} />
-          <Button text={"Mesa"} action={() => handleNextTurn()} />
-          <Button text={"Fold"} action={() => handleFold()} />
-          <Button text={"Sair"} action={navigation.goBack} />
+          {!final && <Button text={"Apostar"} action={() => handleAposta()} />}
+          {!final && rodada > 0 && (
+            <Button text={"Mesa"} action={() => handleNextTurn()} />
+          )}
+          {!final && <Button text={"Fold"} action={() => handleFold()} />}
+          {!final && <Button text={"Sair"} action={navigation.goBack} />}
+          {final && <Button text={"Novo jogo"} action={() => novoJogo()} />}
         </View>
       </View>
     </View>
