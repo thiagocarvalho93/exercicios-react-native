@@ -4,7 +4,7 @@ import { View, Text, Image } from "react-native";
 import { getCards, getDeckId } from "../../services/axiosClient";
 import { styles } from "./styles";
 import { AuthContext } from "../../context/AuthContext";
-import { verificaDupla, verificaFlush } from "./rules";
+import { verificaFlush, organizaValores, verificaStraight } from "./rules";
 
 const Game = ({ route, navigation }) => {
   const { idDeck } = route.params;
@@ -22,7 +22,6 @@ const Game = ({ route, navigation }) => {
   const flop = async () => {
     const deck = await getCards(deckId, 3);
     setCards(deck);
-    console.log(cards);
   };
 
   // turn e river
@@ -53,7 +52,6 @@ const Game = ({ route, navigation }) => {
     } else {
       get();
     }
-    verificaFlush(hand, cards);
     setRodada((prevstate) => prevstate + 1);
   };
 
@@ -83,6 +81,13 @@ const Game = ({ route, navigation }) => {
   useEffect(() => {
     getHand();
   }, []);
+
+  useEffect(() => {
+    if (hand) {
+      verificaStraight(hand, cards);
+      verificaFlush(hand, cards);
+    }
+  }, [cards]);
 
   return (
     <View style={styles.container}>
