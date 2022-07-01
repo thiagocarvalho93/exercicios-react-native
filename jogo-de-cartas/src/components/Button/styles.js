@@ -15,9 +15,10 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "#6B0400",
+    backgroundColor: "#AD0600",
     borderColor: "#AD0600",
     borderRadius: 10,
     borderWidth: 1,
+    margin: 1,
   },
 });
