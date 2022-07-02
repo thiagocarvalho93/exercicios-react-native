@@ -4,7 +4,7 @@ import { View, Text, Image } from "react-native";
 import { getCards, getDeckId } from "../../services/axiosClient";
 import { styles } from "./styles";
 import { AuthContext } from "../../context/AuthContext";
-import { verificaFlush, organizaValores, verificaStraight } from "./rules";
+import { verificaGanhador, verificaMao, rankString } from "./rules";
 
 const Game = ({ route, navigation }) => {
   const { idDeck } = route.params;
@@ -12,6 +12,7 @@ const Game = ({ route, navigation }) => {
   const [cards, setCards] = useState(null);
   const [hand, setHand] = useState(null);
   const [oponente, setOponente] = useState(null);
+  const [rankUser, setRankUser] = useState("");
   const [fichasUser, setFichasUser] = useState(1000);
   const [fichasOponente, setFichasOponente] = useState(1000);
   const [pot, setPot] = useState(0);
@@ -26,7 +27,6 @@ const Game = ({ route, navigation }) => {
 
   // turn e river
   const get = async () => {
-    if (final) return;
     const deck = await getCards(deckId, 1);
     if (cards === null) {
       setCards(deck);
@@ -39,11 +39,20 @@ const Game = ({ route, navigation }) => {
   };
 
   const handleAposta = () => {
-    if (final) return;
     setFichasUser((prevstate) => prevstate - 50);
     setFichasOponente((prevstate) => prevstate - 50);
     setPot((prevstate) => prevstate + 100);
     handleNextTurn();
+  };
+
+  const handleGanhador = () => {
+    console.log(hand);
+    console.log(oponente);
+    console.log(cards);
+    const ganhador = verificaGanhador(hand, oponente, cards);
+    if (ganhador === 1) setFichasUser((prevstate) => prevstate + pot);
+    else if (ganhador === 2) setFichasOponente((prevstate) => prevstate + pot);
+    novoJogo();
   };
 
   const handleNextTurn = () => {
@@ -83,10 +92,10 @@ const Game = ({ route, navigation }) => {
 
   useEffect(() => {
     if (hand) {
-      verificaStraight(hand, cards);
-      verificaFlush(hand, cards);
+      const rank = verificaMao(hand, cards);
+      setRankUser(rankString(rank));
     }
-  }, [cards]);
+  }, [cards, hand]);
 
   return (
     <View style={styles.container}>
@@ -107,7 +116,7 @@ const Game = ({ route, navigation }) => {
       <View style={styles.menuContainer}>
         <View style={styles.hands}>
           <Text style={styles.text}>
-            {user.nome} ${fichasUser}
+            {user.nome} ${fichasUser} - {rankUser}
           </Text>
           <View style={styles.hand}>
             {hand &&
@@ -142,7 +151,9 @@ const Game = ({ route, navigation }) => {
           )}
           {!final && <Button text={"Fold"} action={() => handleFold()} />}
           {!final && <Button text={"Sair"} action={navigation.goBack} />}
-          {final && <Button text={"Novo jogo"} action={() => novoJogo()} />}
+          {final && (
+            <Button text={"Novo jogo"} action={() => handleGanhador()} />
+          )}
         </View>
       </View>
     </View>
