@@ -51,7 +51,7 @@ const Game = ({ route, navigation }) => {
     console.log(cards);
     const ganhador = verificaGanhador(hand, oponente, cards);
     if (ganhador === 1) setFichasUser((prevstate) => prevstate + pot);
-    else if (ganhador === 2) setFichasOponente((prevstate) => prevstate + pot);
+    else setFichasOponente((prevstate) => prevstate + pot);
     novoJogo();
   };
 

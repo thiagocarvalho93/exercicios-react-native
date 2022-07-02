@@ -192,7 +192,7 @@ export const verificaGanhador = (maoJogador, maoOponente, mesa) => {
   const oponente = verificaMao(maoOponente, mesa);
   console.log(oponente);
   if (jogador < oponente) return 1;
-  if (oponente > jogador) return 2;
+  if (oponente < jogador) return 2;
   // fazer critério de desempate
   return 1;
 };
