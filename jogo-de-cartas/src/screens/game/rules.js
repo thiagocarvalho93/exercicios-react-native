@@ -27,27 +27,22 @@ export const organizaValores = (mao, mesa) => {
   return valores;
 };
 
-export const verificaFlush = (mao, mesa) => {
-  let valores = organizaNaipes(mao, mesa);
-  let count = 0;
-  let cartaMaisAlta = valores[0];
-  let max = 1;
-  for (let i = 0; i < valores.length; i++) {
-    for (let j = i; j < valores.length; j++) {
-      if (valores[i] == valores[j]) count++;
-      if (count > max) {
-        max = count;
-      }
-      if (valores[i] > cartaMaisAlta) cartaMaisAlta = valores[i];
+export const verificaFlush = (naipes) => {
+  let count = 1;
+  let flush = false;
+  for (let i = 1; i < naipes.length; i++) {
+    if (naipes[i] === naipes[i - 1]) count++;
+    else count = 1;
+    if (count === 5) {
+      flush = true;
+      break;
     }
-    count = 0;
   }
-  if (max >= 5) return cartaMaisAlta;
+  if (flush) return true;
   return false;
 };
 
-export const verificaStraight = (mao, mesa) => {
-  let valores = organizaValores(mao, mesa);
+export const verificaStraight = (valores) => {
   let count = 1;
   let max = 1;
   let cartaMaisAlta = valores[0];
@@ -66,99 +61,83 @@ export const verificaStraight = (mao, mesa) => {
   return false;
 };
 
-export const verificaQuadra = (mao, mesa) => {
-  let valores = organizaValores(mao, mesa);
+export const verificaQuadra = (valores) => {
   let count = 1;
-  let max = 1;
-  let cartaMaisAlta = valores[0];
   let prev = 0;
   for (let i = 0; i < valores.length; i++) {
     if (valores[i] === prev) count++;
-    if (count > max) {
-      max = count;
-    } else {
-      count = 1;
-    }
-    if (valores[i] > cartaMaisAlta) cartaMaisAlta = valores[i];
+    else count = 1;
+    if (count === 4) return valores[i];
     prev = valores[i];
   }
-  if (max === 4) return cartaMaisAlta;
   return false;
 };
 
-// Terminar
-export const verificaFullHouse = (mao, mesa) => {
-  let valores = organizaValores(mao, mesa);
-  let trinca = false;
-  let dupla = false;
+export const verificaFullHouse = (valores) => {
   let count = 1;
   let max = 1;
   let prev = 0;
-  for (let i = 0; i < valores.length; i++) {
-    if (valores[i] === prev) count++;
-    if (count > max) {
-      max = count;
-    } else {
-      count = 1;
-    }
-    prev = valores[i];
-  }
-  if (max === 3) return true;
+  const cartaTrinca = verificaTrinca(valores);
+  const cartaDupla = verificaDupla(valores.filter((a) => a !== cartaTrinca));
+  if (cartaTrinca && cartaDupla) return [cartaTrinca, cartaDupla];
   return false;
 };
 
-export const verificaTrinca = (mao, mesa) => {
-  let valores = organizaValores(mao, mesa);
+export const verificaTrinca = (valores) => {
   let count = 1;
-  let max = 1;
-  let carta = valores[0];
   let prev = 0;
   for (let i = 0; i < valores.length; i++) {
     if (valores[i] === prev) count++;
-    if (count > max) {
-      max = count;
-    } else {
-      count = 1;
-    }
+    else count = 1;
+    if (count === 3) return valores[i];
     prev = valores[i];
   }
-  if (max === 3) return true;
   return false;
 };
 
-export const verificaDupla = (mao, mesa) => {
-  let valores = organizaValores(mao, mesa);
+export const verificaDupla = (valores) => {
   let count = 1;
-  let max = 1;
   let prev = 0;
   for (let i = 0; i < valores.length; i++) {
     if (valores[i] === prev) count++;
-    if (count > max) {
-      max = count;
-    } else {
-      count = 1;
-    }
+    else count = 1;
+    if (count === 2) return valores[i];
     prev = valores[i];
   }
-  if (max === 2) return true;
+  return false;
+};
+
+export const verificaDoisPares = (valores) => {
+  let count = 1;
+  let max = 1;
+  let prev = 0;
+  const cartaDuplaUm = verificaDupla(valores);
+  const cartaDuplaDois = verificaDupla(
+    valores.filter((a) => a !== cartaDuplaUm)
+  );
+  if (cartaDuplaUm && cartaDuplaDois) return [cartaDuplaUm, cartaDuplaDois];
   return false;
 };
 
 export const verificaMao = (mao, mesa) => {
+  const valores = organizaValores(mao, mesa);
   // STRAIGHT FLUSH 1
-  if (verificaStraight(mao, mesa) && verificaFlush(mao, mesa)) return 1;
+  if (verificaStraight(valores) && verificaFlush(valores)) return 1;
   // QUADRA 2
-  if (verificaQuadra(mao, mesa)) return 2;
+  if (verificaQuadra(valores)) return 2;
   // FULL HOUSE 3
+  if (verificaFullHouse(valores)) return 3;
   // FLUSH 4
-  if (verificaFlush(mao, mesa)) return 4;
+  const naipes = organizaNaipes(mao, mesa);
+  if (verificaFlush(naipes)) return 4;
   // STRAIGHT 5
-  if (verificaStraight(mao, mesa)) return 5;
+  if (verificaStraight(valores)) return 5;
   // TRINCA 6
-  if (verificaTrinca(mao, mesa)) return 6;
+  if (verificaTrinca(valores)) return 6;
   // DOIS PARES 7
+  if (verificaDoisPares(valores)) return 7;
   // PAR 8
-  if (verificaDupla(mao, mesa)) return 8;
+  if (verificaDupla(valores)) return 8;
   // CARTA ALTA 9
   return 9;
 };
